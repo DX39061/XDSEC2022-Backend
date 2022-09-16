@@ -1,4 +1,4 @@
-module xdsec-join
+module XDSEC2022-Backend
 
 go 1.19
 

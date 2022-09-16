@@ -1,11 +1,11 @@
 package cache
 
 import (
+	"XDSEC2022-Backend/src/config"
+	"XDSEC2022-Backend/src/logger"
 	"github.com/go-redis/redis"
 	"sort"
 	"strconv"
-	"xdsec-join/src/config"
-	"xdsec-join/src/logger"
 )
 
 type RedisClient struct {

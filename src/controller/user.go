@@ -1,11 +1,11 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/game_bind"
+	"XDSEC2022-Backend/src/repository"
+	"XDSEC2022-Backend/src/utility"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
-	"xdsec-join/src/game_bind"
-	"xdsec-join/src/repository"
-	utility2 "xdsec-join/src/utility"
 )
 
 func init() {
@@ -46,13 +46,13 @@ func UserSearchHandler(ctx *gin.Context) {
 }
 
 func UserGetListHandler(ctx *gin.Context) {
-	limit, err := utility2.GetIntFromUrlQuery(ctx, "limit")
+	limit, err := utility.GetIntFromUrlQuery(ctx, "limit")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
 		return
 	}
-	skip, err := utility2.GetIntFromUrlQuery(ctx, "skip")
+	skip, err := utility.GetIntFromUrlQuery(ctx, "skip")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
@@ -68,7 +68,7 @@ func UserGetListHandler(ctx *gin.Context) {
 }
 
 func UserGetDetailHandler(ctx *gin.Context) {
-	userID, err := utility2.GetUintFromUrlParam(ctx, "user")
+	userID, err := utility.GetUintFromUrlParam(ctx, "user")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
@@ -106,7 +106,7 @@ func UserChangeProfileHandler(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	userID, err := utility2.GetUintFromUrlParam(ctx, "user")
+	userID, err := utility.GetUintFromUrlParam(ctx, "user")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
@@ -145,13 +145,13 @@ func UserResetPasswordHandler(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	password, err := utility2.HashPassword(req.NewPassword)
+	password, err := utility.HashPassword(req.NewPassword)
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
 		return
 	}
-	userID, err := utility2.GetUintFromUrlParam(ctx, "user")
+	userID, err := utility.GetUintFromUrlParam(ctx, "user")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
@@ -174,7 +174,7 @@ func UserResetPasswordHandler(ctx *gin.Context) {
 }
 
 func UserBindGameHandler(ctx *gin.Context) {
-	userID, err := utility2.GetUintFromUrlParam(ctx, "user")
+	userID, err := utility.GetUintFromUrlParam(ctx, "user")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
@@ -196,7 +196,7 @@ func UserBindGameHandler(ctx *gin.Context) {
 }
 
 func UserDeleteHandler(ctx *gin.Context) {
-	userID, err := utility2.GetUintFromUrlParam(ctx, "user")
+	userID, err := utility.GetUintFromUrlParam(ctx, "user")
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()

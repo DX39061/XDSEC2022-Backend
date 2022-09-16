@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/config"
+	"XDSEC2022-Backend/src/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net"
@@ -11,8 +13,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"xdsec-join/src/config"
-	"xdsec-join/src/logger"
 )
 
 var engine *gin.Engine

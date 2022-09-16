@@ -1,6 +1,8 @@
 package logger
 
 import (
+	"XDSEC2022-Backend/src/config"
+	"XDSEC2022-Backend/src/utility"
 	"fmt"
 	prostates "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
@@ -8,8 +10,6 @@ import (
 	"os"
 	"path"
 	"time"
-	"xdsec-join/src/config"
-	"xdsec-join/src/utility"
 )
 
 var level zapcore.Level

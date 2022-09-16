@@ -1,14 +1,14 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/cache"
+	"XDSEC2022-Backend/src/config"
+	"XDSEC2022-Backend/src/logger"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"strings"
 	"time"
-	"xdsec-join/src/cache"
-	"xdsec-join/src/config"
-	"xdsec-join/src/logger"
 )
 
 type TokenClaims struct {

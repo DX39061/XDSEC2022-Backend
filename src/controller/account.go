@@ -1,11 +1,11 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/model"
+	"XDSEC2022-Backend/src/repository"
+	"XDSEC2022-Backend/src/utility"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
-	"xdsec-join/src/model"
-	"xdsec-join/src/repository"
-	"xdsec-join/src/utility"
 )
 
 func init() {

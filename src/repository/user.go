@@ -1,12 +1,12 @@
 package repository
 
 import (
+	"XDSEC2022-Backend/src/logger"
+	"XDSEC2022-Backend/src/model"
+	"XDSEC2022-Backend/src/utility"
 	"errors"
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
-	"xdsec-join/src/logger"
-	"xdsec-join/src/model"
-	utility2 "xdsec-join/src/utility"
 )
 
 var UserInitFlag = false
@@ -23,7 +23,7 @@ func GetUserCount() (int64, error) {
 
 func SearchUsers(keyword string) ([]model.UserShort, error) {
 	var users []model.User
-	payload, args := utility2.ConstructPayload(keyword, &model.User{})
+	payload, args := utility.ConstructPayload(keyword, &model.User{})
 	err := Database.Model(&model.User{}).
 		Where(payload, args...).
 		Order("id asc").
@@ -93,7 +93,7 @@ func ValidateUserPassword(account string, password string) (model.User, error) {
 		}
 		return model.User{}, errors.New("account or password is incorrect")
 	}
-	if !utility2.CheckPasswordHash(password, user.Password) {
+	if !utility.CheckPasswordHash(password, user.Password) {
 		logger.WarnFmt("Wrong password login: %s", account)
 		return model.User{}, errors.New("account or password is incorrect")
 	}

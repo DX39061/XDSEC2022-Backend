@@ -1,13 +1,13 @@
 package game_bind
 
 import (
+	"XDSEC2022-Backend/src/config"
 	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
 	"strconv"
 	"strings"
-	"xdsec-join/src/config"
 )
 
 func GetUserDataOfGame(studentID string) (GameDataResponse, error) {

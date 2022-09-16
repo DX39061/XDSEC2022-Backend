@@ -1,12 +1,12 @@
 package repository
 
 import (
+	"XDSEC2022-Backend/src/config"
+	"XDSEC2022-Backend/src/logger"
+	"XDSEC2022-Backend/src/model"
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"xdsec-join/src/config"
-	logger2 "xdsec-join/src/logger"
-	"xdsec-join/src/model"
 )
 
 var Database *gorm.DB
@@ -14,8 +14,8 @@ var Database *gorm.DB
 var modelsInit []interface{}
 
 func Initialize() error {
-	logger2.Info("Initializing database...")
-	l := logger2.DBLoggerNew(zap.L())
+	logger.Info("Initializing database...")
+	l := logger.DBLoggerNew(zap.L())
 	l.SetAsDefault()
 	sqlConfigSrc := config.DatabaseConfig
 	sqlConfig := postgres.Config{
@@ -29,12 +29,12 @@ func Initialize() error {
 	if err != nil {
 		return err
 	}
-	logger2.Info("Database initialized, recovering state...")
+	logger.Info("Database initialized, recovering state...")
 	err = initTables()
 	if err != nil {
 		return err
 	}
-	logger2.Info("Database state recovered.")
+	logger.Info("Database state recovered.")
 	return nil
 }
 

@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/config"
 	"github.com/gin-gonic/gin"
-	"xdsec-join/src/config"
 )
 
 type RoutingRegisterFunc func(router *gin.RouterGroup)
