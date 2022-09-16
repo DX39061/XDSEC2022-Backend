@@ -1,0 +1,43 @@
+# config redis
+cache:
+  host:
+  port: 6379
+  password:
+
+# config PostgreSQL
+database:
+  host:
+  port: 5432
+  user:
+  password:
+  db_name:
+  ssl_mode: disable
+  time_zone: Asia/Shanghai
+
+# config logger
+logger:
+  level: info
+  format: console
+  directory:
+  max_age: 30
+  link_name:
+  show_line: false
+  encode_level: CapitalLevelEncoder
+  stacktrace_key:
+  log_in_console: true
+
+# config server listen address
+server:
+  address:
+  port:
+  api_base_path:
+
+# configure user auth token settings
+token:
+  signing_key: <token signing key>
+  buffer_time: 21600
+  expires_time: 86400
+
+recruitment:
+  auth_token:
+  enabled: true
