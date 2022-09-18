@@ -15,9 +15,52 @@ func init() {
 	RegisterModel(model.User{})
 }
 
-func GetUserCount() (int64, error) {
-	var count int64
-	err := Database.Model(&model.User{}).Count(&count).Error
+func GetUserCount() (model.UserCount, error) {
+	var count model.UserCount
+	err := Database.Model(&model.User{}).Count(&count.Total).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "web").Count(&count.Web).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "reverse").Count(&count.Reverse).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "pwn").Count(&count.Pwn).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "crypto").Count(&count.Crypto).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "misc").Count(&count.Misc).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("direction = ?", "dev").Count(&count.Dev).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("department = ?", "secretariat").Count(&count.Secretariat).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("department = ?", "devops").Count(&count.Devops).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("department = ?", "technique").Count(&count.Technique).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("department = ?", "publicity").Count(&count.Publicity).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
 	return count, err
 }
 

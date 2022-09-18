@@ -39,3 +39,17 @@ type UserDetail struct {
 	LearningExperience string `json:"learning-experience"` // 学习经历
 	HobbyAndAdvantage  string `json:"hobby-and-advantage"` //爱好特长
 }
+
+type UserCount struct {
+	Total       int64 `json:"total"`
+	Web         int64 `json:"web"`
+	Reverse     int64 `json:"reverse"`
+	Pwn         int64 `json:"pwn"`
+	Crypto      int64 `json:"crypto"`
+	Misc        int64 `json:"misc"`
+	Dev         int64 `json:"dev"`
+	Secretariat int64 `json:"secretariat"`
+	Technique   int64 `json:"technique"`
+	Devops      int64 `json:"devops"`
+	Publicity   int64 `json:"publicity"`
+}
