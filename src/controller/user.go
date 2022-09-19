@@ -48,15 +48,11 @@ func UserSearchHandler(ctx *gin.Context) {
 func UserGetListHandler(ctx *gin.Context) {
 	limit, err := utility.GetIntFromUrlQuery(ctx, "limit")
 	if err != nil {
-		InternalFailedWithMessage(ctx, err.Error())
-		ctx.Abort()
-		return
+		limit = 10
 	}
 	skip, err := utility.GetIntFromUrlQuery(ctx, "skip")
 	if err != nil {
-		InternalFailedWithMessage(ctx, err.Error())
-		ctx.Abort()
-		return
+		skip = 0
 	}
 	usersShort, err := repository.GetUserList(limit, skip)
 	if err != nil {
