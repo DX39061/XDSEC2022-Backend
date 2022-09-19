@@ -4,6 +4,7 @@ type User struct {
 	ID                 uint   `json:"id"`
 	Admin              bool   `json:"admin"`
 	Password           string `json:"password"`
+	NickName           string `json:"nick-name"`
 	Name               string `json:"name"`
 	Sex                string `json:"sex"`
 	Major              string `json:"major"` // 学院/专业
@@ -18,15 +19,17 @@ type User struct {
 }
 
 type UserShort struct {
-	ID    uint   `json:"id"`
-	Name  string `json:"name"`
-	Sex   string `json:"sex"`
-	Major string `json:"major"` // 学院/专业
+	ID       uint   `json:"id"`
+	NickName string `json:"nick-name"`
+	Name     string `json:"name"`
+	Sex      string `json:"sex"`
+	Major    string `json:"major"` // 学院/专业
 }
 
 type UserDetail struct {
 	ID                 uint   `json:"id"`
 	Admin              bool   `json:"admin"`
+	NickName           string `json:"nick-name"`
 	Name               string `json:"name"`
 	Sex                string `json:"sex"`
 	Major              string `json:"major"` // 学院/专业
@@ -42,6 +45,9 @@ type UserDetail struct {
 
 type UserCount struct {
 	Total       int64 `json:"total"`
+	Admin       int64 `json:"admin"`
+	Male        int64 `json:"male"`
+	Female      int64 `json:"female"`
 	Web         int64 `json:"web"`
 	Reverse     int64 `json:"reverse"`
 	Pwn         int64 `json:"pwn"`

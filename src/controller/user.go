@@ -80,7 +80,8 @@ func UserGetDetailHandler(ctx *gin.Context) {
 }
 
 type ChangeUserProfileRequest struct {
-	Admin              string `json:"admin"`
+	Admin              bool   `json:"admin"`
+	NickName           string `json:"nick-name"`
 	Name               string `json:"name"`
 	Sex                string `json:"sex"`
 	Major              string `json:"major"` // 学院/专业

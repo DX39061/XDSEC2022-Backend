@@ -49,6 +49,7 @@ func AccountLoginHandler(ctx *gin.Context) {
 }
 
 type JoinRequest struct {
+	NickName           string `json:"nick-name"`
 	Name               string `json:"name"`
 	Sex                string `json:"sex"`
 	Major              string `json:"major"` // 学院/专业
@@ -125,6 +126,7 @@ func AccountGetSelfProfileHandler(ctx *gin.Context) {
 }
 
 type ChangeSelfProfileRequest struct {
+	NickName           string `json:"nick-name"`
 	Name               string `json:"name"`
 	Sex                string `json:"sex"`
 	Major              string `json:"major"` // 学院/专业

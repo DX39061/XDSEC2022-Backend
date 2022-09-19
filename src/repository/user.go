@@ -61,7 +61,19 @@ func GetUserCount() (model.UserCount, error) {
 	if err != nil {
 		return model.UserCount{}, err
 	}
-	return count, err
+	err = Database.Model(&model.User{}).Where("sex = ?", "男").Count(&count.Male).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("sex = ?", "女").Count(&count.Female).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	err = Database.Model(&model.User{}).Where("admin = ?", true).Count(&count.Admin).Error
+	if err != nil {
+		return model.UserCount{}, err
+	}
+	return count, nil
 }
 
 func SearchUsers(keyword string) ([]model.UserShort, error) {
