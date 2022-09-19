@@ -12,7 +12,7 @@ import (
 )
 
 type TokenClaims struct {
-	UserID uint   `json:"user_id"`
+	UserID uint   `json:"user-id"`
 	Name   string `json:"name"`
 	Admin  bool   `json:"admin"`
 	jwt.StandardClaims
