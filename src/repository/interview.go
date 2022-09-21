@@ -2,7 +2,9 @@ package repository
 
 import (
 	"XDSEC2022-Backend/src/model"
+	"XDSEC2022-Backend/src/utility"
 	"github.com/jinzhu/copier"
+	"gorm.io/gorm"
 )
 
 func init() {
@@ -16,6 +18,24 @@ func GetInterviewCount() (int64, error) {
 		return 0, err
 	}
 	return count, nil
+}
+
+func SearchInterviews(keyword string) ([]model.InterviewShort, error) {
+	var interviews []model.Interview
+	payload, args := utility.ConstructPayload(keyword, &model.Interview{})
+	err := Database.Model(&model.Interview{}).
+		Where(payload, args...).
+		Order("id asc").
+		Find(&interviews).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	var interviewsShort []model.InterviewShort
+	err = copier.Copy(&interviewsShort, interviews)
+	if err != nil {
+		return nil, err
+	}
+	return interviewsShort, nil
 }
 
 func GetInterviewList(limit int, skip int) ([]model.InterviewShort, error) {

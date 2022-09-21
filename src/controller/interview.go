@@ -13,6 +13,7 @@ func init() {
 		adminInterviewRouter := router.Group("/interviews", LoginRequired(), AdminRequired())
 		{
 			adminInterviewRouter.GET("/count", GetInterviewCountHandler)
+			adminInterviewRouter.GET("/search", InterviewSearchHandler) // keyword = ?
 			adminInterviewRouter.GET("", GetInterviewListHandler)
 			adminInterviewRouter.POST("", CreateInterviewHandler)
 			adminInterviewRouter.GET("/:interview", GetInterviewDetailHandler)
@@ -21,6 +22,17 @@ func init() {
 			adminInterviewRouter.DELETE("/:interview", DeleteInterviewHandler)
 		}
 	})
+}
+
+func InterviewSearchHandler(ctx *gin.Context) {
+	keyword := ctx.Query("keyword")
+	InterviewsShort, err := repository.SearchInterviews(keyword)
+	if err != nil {
+		InternalFailedWithMessage(ctx, err.Error())
+		ctx.Abort()
+		return
+	}
+	OkWithData(ctx, InterviewsShort)
 }
 
 func GetInterviewCountHandler(ctx *gin.Context) {
