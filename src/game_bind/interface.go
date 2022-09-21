@@ -4,6 +4,7 @@ import (
 	"XDSEC2022-Backend/src/config"
 	"encoding/json"
 	"errors"
+	"github.com/mitchellh/mapstructure"
 	"io"
 	"net/http"
 	"strconv"
@@ -32,8 +33,10 @@ func GetUserDataOfGame(studentID string) (GameDataResponse, error) {
 	if response["data"] == nil {
 		return GameDataResponse{}, errors.New("get user data error")
 	}
-	data.ID = uint(int(response["data"].([]interface{})[0].(map[string]interface{})["id"].(float64)))
-	data.Score = response["data"].([]interface{})[0].(map[string]interface{})["score"].(float64)
+	err = mapstructure.Decode(response["data"], &data)
+	if err != nil {
+		return GameDataResponse{}, err
+	}
 	return data, nil
 }
 
