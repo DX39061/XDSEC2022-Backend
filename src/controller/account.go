@@ -236,9 +236,9 @@ func AccountChangePasswordHandler(ctx *gin.Context) {
 
 func loginUser(ctx *gin.Context, user model.User) {
 	err := DistributeToken(ctx, TokenClaims{
-		UserID: user.ID,
-		Name:   user.Name,
-		Admin:  user.Admin,
+		UserID:   user.ID,
+		NickName: user.NickName,
+		Admin:    user.Admin,
 	})
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())

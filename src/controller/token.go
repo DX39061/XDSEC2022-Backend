@@ -12,9 +12,9 @@ import (
 )
 
 type TokenClaims struct {
-	UserID uint   `json:"user-id"`
-	Name   string `json:"name"`
-	Admin  bool   `json:"admin"`
+	UserID   uint   `json:"user-id"`
+	NickName string `json:"nick-name"`
+	Admin    bool   `json:"admin"`
 	jwt.StandardClaims
 }
 
@@ -75,7 +75,7 @@ func ExtractToken(ctx *gin.Context) error {
 	ctx.Set("token", tokenStr)
 	ctx.Set("claims", *claims)
 	ctx.Set("id", claims.UserID)
-	ctx.Set("name", claims.Name)
+	ctx.Set("nick-name", claims.NickName)
 	ctx.Set("admin", claims.Admin)
 	return nil
 }
