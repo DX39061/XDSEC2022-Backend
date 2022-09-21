@@ -8,7 +8,7 @@ import (
 type Interview struct {
 	ID        uint           `json:"id"`
 	CreatedAt time.Time      `json:"-"`
-	UpdateAt  time.Time      `json:"update-at"`
+	UpdatedAt time.Time      `json:"updated-at"`
 	DeletedAt gorm.DeletedAt `json:"-"`
 
 	Round         uint   `json:"round"`
@@ -22,7 +22,7 @@ type Interview struct {
 
 type InterviewShort struct {
 	ID            uint      `json:"id"`
-	UpdateAt      time.Time `json:"update-at"`
+	UpdatedAt     time.Time `json:"updated-at"`
 	Round         uint      `json:"round"`
 	Pass          bool      `json:"pass"`
 	Interviewer   string    `json:"interviewer"`
@@ -32,7 +32,7 @@ type InterviewShort struct {
 
 type InterviewDetail struct {
 	ID          uint      `json:"id"`
-	UpdateAt    time.Time `json:"update-at"`
+	UpdatedAt   time.Time `json:"updated-at"`
 	Round       uint      `json:"round"`
 	Pass        bool      `json:"pass"`
 	Interviewer string    `json:"interviewer"`
