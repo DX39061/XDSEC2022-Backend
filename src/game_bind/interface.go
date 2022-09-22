@@ -31,7 +31,7 @@ func GetUserDataOfGame(studentID string) (GameDataResponse, error) {
 	}
 	var data GameDataResponse
 	if response["data"] == nil {
-		return GameDataResponse{}, errors.New("get user data error")
+		return GameDataResponse{}, errors.New("record not found")
 	}
 	err = mapstructure.Decode(response["data"], &data)
 	if err != nil {
