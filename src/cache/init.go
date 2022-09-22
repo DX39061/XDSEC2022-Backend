@@ -3,44 +3,29 @@ package cache
 import (
 	"XDSEC2022-Backend/src/config"
 	"XDSEC2022-Backend/src/logger"
-	"github.com/go-redis/redis"
-	"sort"
-	"strconv"
+	"go.etcd.io/bbolt"
 )
 
-type RedisClient struct {
-	Client *redis.Client
-}
-
-var caches = make(map[string]*RedisClient)
-
-func Register(name string, cache *RedisClient) {
-	caches[name] = cache
-}
+var tokenCache *bbolt.DB
 
 func Initialize() error {
 	logger.Info("Initializing cache...")
-	redisCfg := config.CacheConfig
-	dbCount := 0
-	var keys []string
-	for k := range caches {
-		keys = append(keys, k)
+	cacheCfg := config.CacheConfig
+	var err error
+	tokenCache, err = bbolt.Open(cacheCfg.Path, 0600, nil)
+	if err != nil {
+		return err
 	}
-	// sort to ensure consistent order
-	sort.Strings(keys)
-	for _, i := range keys {
-		caches[i].Client = redis.NewClient(&redis.Options{
-			Addr:     redisCfg.Host + ":" + strconv.Itoa(redisCfg.Port),
-			Password: redisCfg.Password,
-			DB:       dbCount,
-		})
-		_, err := caches[i].Client.Ping().Result()
+	err = tokenCache.Update(func(tx *bbolt.Tx) error {
+		_, err = tx.CreateBucketIfNotExists([]byte("token"))
 		if err != nil {
 			return err
 		}
-		dbCount++
+		return nil
+	})
+	if err != nil {
+		return err
 	}
-
 	logger.Info("Cache server initialized.")
 	return nil
 }

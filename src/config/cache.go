@@ -7,9 +7,7 @@ import (
 
 // Cache is the configuration of the redis cache server.
 type Cache struct {
-	Host     string `mapstructure:"host" json:"host" yaml:"host"`
-	Port     int    `mapstructure:"port" json:"port" yaml:"port"`
-	Password string `mapstructure:"password" json:"password" yaml:"password"`
+	Path string `mapstructure:"path" json:"path" yaml:"path"`
 }
 
 var CacheConfig Cache

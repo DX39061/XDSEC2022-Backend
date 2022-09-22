@@ -1,56 +1,44 @@
 package cache
 
 import (
-	"XDSEC2022-Backend/src/config"
-	"XDSEC2022-Backend/src/logger"
+	"errors"
+	"go.etcd.io/bbolt"
 	"strconv"
-	"time"
 )
 
-var tokenCache RedisClient
-
-func init() {
-	Register("token", &tokenCache)
-}
-
 func ValidateToken(token string) bool {
-	result, err := tokenCache.Client.Exists(token).Result()
-	if err != nil {
+	var val []byte
+	err := tokenCache.View(func(tx *bbolt.Tx) error {
+		b := tx.Bucket([]byte("token"))
+		val = b.Get([]byte(token))
+		return nil
+	})
+	if err != nil || val == nil {
 		return false
+	} else {
+		return true
 	}
-	return result == 1
 }
 
 func PermitToken(token string, userID uint) error {
-	err := tokenCache.Client.Set(token, strconv.FormatUint(uint64(userID), 10), time.Duration(config.TokenConfig.ExpiresTime)*time.Second).Err()
-	if err != nil {
+	err := tokenCache.Update(func(tx *bbolt.Tx) error {
+		b := tx.Bucket([]byte("token"))
+		err := b.Put([]byte(token), []byte(strconv.FormatUint(uint64(userID), 10)))
 		return err
-	}
-	return tokenCache.Client.SAdd(strconv.FormatUint(uint64(userID), 10), token).Err()
-}
-
-func ExpireToken(token string) error {
-	userID, err := tokenCache.Client.Get(token).Result()
-	if err != nil {
-		return err
-	}
-	err = tokenCache.Client.Del(token).Err()
-	if err != nil {
-		return err
-	}
-	tokenCache.Client.SRem(userID, token)
+	})
 	return err
 }
 
-func ExpireAllTokenOfUser(userID uint) (err error) {
-	userTokens := tokenCache.Client.SMembers(strconv.FormatUint(uint64(userID), 10)).Val()
-	for _, token := range userTokens {
-		err = ExpireToken(token)
-		if err != nil {
-			logger.WarnFmt("expire one token of user %u failed: %s", userID, err.Error())
+func ExpireToken(token string) error {
+	err := tokenCache.Update(func(tx *bbolt.Tx) error {
+		b := tx.Bucket([]byte("token"))
+		userID := b.Get([]byte(token))
+		if userID == nil {
+			return errors.New("token not found")
 		} else {
-			logger.InfoFmt("expired one token of user %u.", userID)
+			err := b.Delete([]byte(token))
+			return err
 		}
-	}
+	})
 	return err
 }
