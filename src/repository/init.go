@@ -5,8 +5,9 @@ import (
 	"XDSEC2022-Backend/src/logger"
 	"XDSEC2022-Backend/src/model"
 	"go.uber.org/zap"
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 var Database *gorm.DB
@@ -18,11 +19,14 @@ func Initialize() error {
 	l := logger.DBLoggerNew(zap.L())
 	l.SetAsDefault()
 	sqlConfigSrc := config.DatabaseConfig
-	sqlConfig := postgres.Config{
+	sqlConfig := mysql.Config{
 		DSN: sqlConfigSrc.Dsn(),
 	}
 	var err error
-	Database, err = gorm.Open(postgres.New(sqlConfig), &gorm.Config{
+	Database, err = gorm.Open(mysql.New(sqlConfig), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix: "submission2022_",
+		},
 		DisableForeignKeyConstraintWhenMigrating: true,
 		Logger:                                   l,
 	})

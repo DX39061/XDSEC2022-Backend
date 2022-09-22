@@ -4,10 +4,10 @@ cache:
   port: 6379
   password:
 
-# config PostgreSQL
+# config MySQL
 database:
   host:
-  port: 5432
+  port: 3306
   user:
   password:
   db_name:

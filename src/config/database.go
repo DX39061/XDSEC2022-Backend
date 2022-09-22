@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Database is the configuration of PostgreSQL database.
+// Database is the configuration of MySQL database.
 type Database struct {
 	Host     string `mapstructure:"host" json:"host" yaml:"host"`
 	Port     string `mapstructure:"port" json:"port" yaml:"port"`
@@ -18,7 +18,7 @@ type Database struct {
 }
 
 func (d *Database) Dsn() string {
-	// Postgres connection
+	// MySQL connection
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s timezone=%s",
 		d.Host, d.Port, d.User, d.Password, d.DBName, d.SSLMode, d.TimeZone)
 }
