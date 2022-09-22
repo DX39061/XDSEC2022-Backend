@@ -19,8 +19,8 @@ type Database struct {
 
 func (d *Database) Dsn() string {
 	// MySQL connection
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s timezone=%s",
-		d.Host, d.Port, d.User, d.Password, d.DBName, d.SSLMode, d.TimeZone)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=True&loc=Local",
+		d.User, d.Password, d.Host, d.Port, d.DBName)
 }
 
 var DatabaseConfig Database
