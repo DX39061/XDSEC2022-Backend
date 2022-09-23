@@ -9,6 +9,7 @@ type User struct {
 	Sex                string      `json:"sex"`
 	Major              string      `json:"major"` // 学院/专业
 	StudentID          string      `gorm:"unique" json:"student-id"`
+	QQ                 string      `gorm:"unique" json:"qq"`
 	Telephone          string      `gorm:"unique" json:"telephone"`
 	Email              string      `gorm:"unique" json:"email"`
 	Department         string      `json:"department"`          // 意向部门
@@ -36,6 +37,7 @@ type UserDetail struct {
 	Major              string `json:"major"` // 学院/专业
 	StudentID          string `gorm:"unique" json:"student-id"`
 	Telephone          string `gorm:"unique" json:"telephone"`
+	QQ                 string `gorm:"unique" json:"qq"`
 	Email              string `gorm:"unique" json:"email"`
 	Department         string `json:"department"`          // 意向部门
 	Direction          string `json:"direction"`           // 学习方向

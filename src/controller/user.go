@@ -87,6 +87,7 @@ type ChangeUserProfileRequest struct {
 	Major              string `json:"major"` // 学院/专业
 	StudentID          string `json:"student-id"`
 	Telephone          string `json:"telephone"`
+	QQ                 string `json:"qq"`
 	Email              string `json:"email"`
 	Department         string `json:"department"`          // 意向部门
 	Direction          string `json:"direction"`           // 学习方向
