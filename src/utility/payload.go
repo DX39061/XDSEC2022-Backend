@@ -27,6 +27,9 @@ func ConstructPayload(keyword string, model interface{}) (string, []interface{})
 		if !((typeName == "uint" && isInt) || typeName == "string" || (typeName == "bool" && isBool)) {
 			continue
 		}
+		if strings.ContainsRune(jsonTag, '-') {
+			continue
+		}
 		if jsonTag == "-" {
 			continue
 		}
