@@ -35,8 +35,16 @@ func UserCountHandler(ctx *gin.Context) {
 }
 
 func UserSearchHandler(ctx *gin.Context) {
+	limit, err := utility.GetIntFromUrlQuery(ctx, "limit")
+	if err != nil {
+		limit = 10
+	}
+	skip, err := utility.GetIntFromUrlQuery(ctx, "skip")
+	if err != nil {
+		skip = 0
+	}
 	keyword := ctx.Query("keyword")
-	usersShort, err := repository.SearchUsers(keyword)
+	usersShort, err := repository.SearchUsers(keyword, limit, skip)
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()

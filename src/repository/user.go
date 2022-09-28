@@ -76,11 +76,13 @@ func GetUserCount() (model.UserCount, error) {
 	return count, nil
 }
 
-func SearchUsers(keyword string) ([]model.UserShort, error) {
+func SearchUsers(keyword string, limit int, skip int) ([]model.UserShort, error) {
 	var users []model.User
 	payload, args := utility.ConstructPayload(keyword, &model.User{})
 	err := Database.Model(&model.User{}).
 		Where(payload, args...).
+		Offset(skip).
+		Limit(limit).
 		Order("id asc").
 		Find(&users).Error
 	if err != nil && err != gorm.ErrRecordNotFound {

@@ -20,11 +20,13 @@ func GetInterviewCount() (int64, error) {
 	return count, nil
 }
 
-func SearchInterviews(keyword string) ([]model.InterviewShort, error) {
+func SearchInterviews(keyword string, limit int, skip int) ([]model.InterviewShort, error) {
 	var interviews []model.Interview
 	payload, args := utility.ConstructPayload(keyword, &model.Interview{})
 	err := Database.Model(&model.Interview{}).
 		Where(payload, args...).
+		Offset(skip).
+		Limit(limit).
 		Order("id asc").
 		Find(&interviews).Error
 	if err != nil && err != gorm.ErrRecordNotFound {

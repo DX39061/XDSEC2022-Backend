@@ -25,8 +25,16 @@ func init() {
 }
 
 func InterviewSearchHandler(ctx *gin.Context) {
+	limit, err := utility.GetIntFromUrlQuery(ctx, "limit")
+	if err != nil {
+		limit = 10
+	}
+	skip, err := utility.GetIntFromUrlQuery(ctx, "skip")
+	if err != nil {
+		skip = 0
+	}
 	keyword := ctx.Query("keyword")
-	InterviewsShort, err := repository.SearchInterviews(keyword)
+	InterviewsShort, err := repository.SearchInterviews(keyword, limit, skip)
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
