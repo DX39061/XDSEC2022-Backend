@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"XDSEC2022-Backend/src/captcha"
 	"XDSEC2022-Backend/src/model"
 	"XDSEC2022-Backend/src/repository"
 	"XDSEC2022-Backend/src/utility"
@@ -26,8 +27,9 @@ func init() {
 }
 
 type LoginRequest struct {
-	Account  string `json:"account"`
-	Password string `json:"password"`
+	Account      string `json:"account"`
+	Password     string `json:"password"`
+	CaptchaToken string `json:"captcha-token"`
 }
 
 func AccountLoginHandler(ctx *gin.Context) {
@@ -35,6 +37,17 @@ func AccountLoginHandler(ctx *gin.Context) {
 	err := ctx.ShouldBind(&req)
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
+		ctx.Abort()
+		return
+	}
+	captchaVerified, err := captcha.VerifyCaptcha(req.CaptchaToken)
+	if err != nil {
+		InternalFailedWithMessage(ctx, err.Error())
+		ctx.Abort()
+		return
+	}
+	if !captchaVerified {
+		RobotTestFailed(ctx)
 		ctx.Abort()
 		return
 	}
@@ -63,12 +76,24 @@ type JoinRequest struct {
 	LearnedTechnique   string `json:"learned-technique"`   // 技术基础
 	LearningExperience string `json:"learning-experience"` // 学习经历
 	HobbyAndAdvantage  string `json:"hobby-and-advantage"` //爱好特长
+	CaptchaToken       string `json:"captcha-token"`
 }
 
 func AccountJoinHandler(ctx *gin.Context) {
 	var req JoinRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
+		ctx.Abort()
+		return
+	}
+	captchaVerified, err := captcha.VerifyCaptcha(req.CaptchaToken)
+	if err != nil {
+		InternalFailedWithMessage(ctx, err.Error())
+		ctx.Abort()
+		return
+	}
+	if !captchaVerified {
+		RobotTestFailed(ctx)
 		ctx.Abort()
 		return
 	}
@@ -81,7 +106,7 @@ func AccountJoinHandler(ctx *gin.Context) {
 		return
 	}
 	var user model.User
-	err := copier.Copy(&user, req)
+	err = copier.Copy(&user, req)
 	if err != nil {
 		InternalFailedWithMessage(ctx, err.Error())
 		ctx.Abort()
