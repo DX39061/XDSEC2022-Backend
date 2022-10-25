@@ -1,9 +1,3 @@
-# config redis
-cache:
-  host:
-  port: 6379
-  password:
-
 # config MySQL
 database:
   host:
