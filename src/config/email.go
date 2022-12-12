@@ -8,8 +8,8 @@ import (
 )
 
 type Email struct {
-	Smtp_url   string `yaml:"smtp_url"`
-	Smtp_port       int    `yaml:"smtp_port"`
+	Smtp_url       string `yaml:"smtp_url"`
+	Smtp_port      int    `yaml:"smtp_port"`
 	Email_from     string `yaml:"email_from"`
 	Email_password string `yaml:"email_password"`
 }
