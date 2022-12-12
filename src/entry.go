@@ -6,10 +6,14 @@ import (
 	"XDSEC2022-Backend/src/controller"
 	"XDSEC2022-Backend/src/logger"
 	"XDSEC2022-Backend/src/repository"
+	"XDSEC2022-Backend/src/utility"
 	"log"
 )
 
 func main() {
+	if err := utility.Initialize(); err != nil {
+		panic("init utility error")
+	}
 	if err := config.Initialize(); err != nil {
 		log.Panic("init config error: ", err)
 	}

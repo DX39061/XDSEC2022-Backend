@@ -39,3 +39,9 @@ token:
 recruitment:
   auth_token:
   enabled: true
+
+email:
+  smtp_address: 
+  smtp_url: 
+  email_from: 
+  email_password: 
